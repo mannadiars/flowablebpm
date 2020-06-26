@@ -1,0 +1,48 @@
+<definitions xmlns="http://www.omg.org/spec/DMN/20180521/MODEL/" id="definition_b8b56883-b502-11ea-840f-0242ac110002" name="Order Tax Table" namespace="http://www.flowable.org/dmn">
+  <decision id="orderTax" name="Order Tax Table">
+    <decisionTable id="decisionTable_b8b56883-b502-11ea-840f-0242ac110002" hitPolicy="FIRST">
+      <input label="State">
+        <inputExpression id="inputExpression_3" typeRef="string">
+          <text>state</text>
+        </inputExpression>
+      </input>
+      <output id="outputExpression_4" name="tax" typeRef="number"></output>
+      <rule>
+        <inputEntry id="inputEntry_3_1">
+          <text><![CDATA[== "AZ"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_4_1">
+          <text><![CDATA[10]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_3_2">
+          <text><![CDATA[== "VA"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_4_2">
+          <text><![CDATA[20]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_3_3">
+          <text><![CDATA[== "MI"]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_4_3">
+          <text><![CDATA[15]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_3_4">
+          <extensionElements>
+            <flowable:operator xmlns:flowable="http://flowable.org/dmn">IS NOT IN</flowable:operator>
+            <flowable:expression xmlns:flowable="http://flowable.org/dmn">AZ,VA,MI</flowable:expression>
+          </extensionElements>
+          <text><![CDATA[${collection:noneOf('AZ,VA,MI', state)}]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_4_4">
+          <text><![CDATA[999]]></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
